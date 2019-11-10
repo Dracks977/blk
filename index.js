@@ -20,8 +20,8 @@ import OrbitDB from 'orbit-db'
 // import OrbitDB from 'orbit-db' 
 
 // Example main code
-const example = require('src/main.js')
+const start = require('src/main.js')
 
 // Call the start function and pass in the 
 // IPFS and OrbitDB modules
-example(IPFS, OrbitDB)
+start(IPFS, OrbitDB)

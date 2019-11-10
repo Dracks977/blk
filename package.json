@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "main": "src/OrbitDB.js",
+  "main": "index.js",
   "dependencies": {
     "cids": "^0.7.1",
     "ipfs-pubsub-1on1": "~0.0.4",
@@ -13,6 +13,7 @@
     "localstorage-down": "^0.6.7",
     "logplease": "^1.2.14",
     "multihashes": "^0.4.12",
+    "orbit-db": "^0.22.1",
     "orbit-db-access-controllers": "~0.2.2",
     "orbit-db-cache": "~0.3.0",
     "orbit-db-counterstore": "~1.6.0",
@@ -58,10 +59,10 @@
     "standard": "^12.0.1",
     "validate-maintainers": "^1.1.0",
     "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build:examples": "webpack --config webpack.config.js --sort-modules-by size && mkdirp src/lib && cpy node_modules/ipfs/dist/index.js src/lib/ipfs.js"
+    "build": "webpack --config webpack.conf.js --sort-modules-by size && mkdirp src/lib && cpy node_modules/ipfs/dist/index.js src/lib/ipfs.js"
   },
   "repository": {
     "type": "git",
