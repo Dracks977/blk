@@ -8,6 +8,7 @@
   "main": "index.js",
   "dependencies": {
     "cids": "^0.7.1",
+    "file-saver": "^2.0.2",
     "ipfs-pubsub-1on1": "~0.0.4",
     "is-node": "^1.0.2",
     "localstorage-down": "^0.6.7",

@@ -1,6 +1,12 @@
 let orbitdb;
 let Ipfs
 let ipfs
+const Identities = require('orbit-db-identity-provider')
+const migrate = require('localstorage-level-migration')
+let identy
+var FileSaver = require('file-saver');
+let OrbitDB
+let DB
 
 function handleError(e) {
   console.error(e.stack)
@@ -38,28 +44,27 @@ const main = {
     ipfs.on('error', (e) => handleError(e))
     ipfs.on('ready', async () => {
       console.log('ipfs ready')
-      orbitdb = await OrbitDB.createInstance(ipfs)
+      identy = await Identities.createIdentity({ id: 'id' })
+      orbitdb = await OrbitDB.createInstance(ipfs, { identity: identy })
       callback()
     })
   },
   async search(data, callback) {
-    console.log(data)
     db = await orbitdb.open(data, { sync: true })
+    DB = db
     db.events.on('ready', () => callback(db))
     db.events.on('replicated', () => callback(db))
     db.events.on('write', () => callback(db))
     db.events.on('replicate.progress', () => callback(db))
     await db.load()
-    callback(db)
+    return callback(null,db)
   },
   async query(db) {
-    const networkPeers = await ipfs.swarm.peers()
-    const databasePeers = await ipfs.pubsub.peers(db.address.toString())
+    if (!db) return null
     const result = db.iterator({ limit: -1 }).collect().map((e) => e.payload.value)
     return result
   },
   async create(data, callback, showresult) {
-    console.log(data.name)
     let o = {
       product_info: {
         name: data.name.value,
@@ -68,20 +73,37 @@ const main = {
       }
     }
     const db = await orbitdb.eventlog(o.product_info.name + "_" + Math.random().toString(36).substring(2, 15))
+    DB = db
 
     db.events.on('ready', () => showresult(db))
     db.events.on('replicated', () => showresult(db))
     db.events.on('write', () => showresult(db))
-    db.events.on('replicate.progress', () => queryAndRender(db))
+    db.events.on('replicate.progress', () => showresult(db))
 
     await db.load();
     const hash = await db.add(o)
-    const address = db.address
-    console.log(hash)
-    console.log(address)
-    const event = db.get(hash)
-    callback(event)
-  }
+    
+    return callback()
+  },
+  async add(data, callback) {
+      let o = {
+      product_tracking: {
+        name: data.name.value,
+        type: data.type.value,
+        desc: data.comment.value
+      }
+    }
+    const hash = await DB.add(o)
+    return callback(db.get(hash))
+  },
+  savekey() {
+   var blob = new Blob([JSON.stringify(identy.toJSON())], {type: "text/plain;charset=utf-8"});
+   FileSaver.saveAs(blob, "key");
+ },
+ comparekeys(db) {
+    if (!db) return null
+    return db.options.accessController.write.indexOf(identy.id)
+ },
 }
 
 module.exports = main
