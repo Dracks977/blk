@@ -26,7 +26,7 @@
 			</ul>
 
 			<div class="uk-navbar-item" >
-				<form action="javascript:;" onsubmit="main.search(this.name.value, display)">
+				<form action="javascript:;" onsubmit="search(this.name.value)">
 					<input name="name" class="uk-input uk-form-width-large" type="text" placeholder="Track some product">
 					<button class="uk-button uk-button-default">Search</button>
 				</form>
@@ -121,5 +121,9 @@
 			UIkit.modal(document.getElementById("create")).hide();
 		}, display)
 	}
+  function search(o) {
+    document.getElementById("loading").style.display = 'block';
+    main.search(o, display)
+  }
 </script>
 </html>
