@@ -105,13 +105,13 @@
 		result.forEach(element => {
 			var e = document.createElement('div');
 			if (element.product_info)
-			e.innerHTML = `<div class="uk-child-width-expand@s uk-text-center" uk-grid><div><div class="uk-card uk-card-default uk-card-body"><p>Product Name: `+element.product_info.name+`</p><p>Product ID: `+db.address.toString()+`</p><p>Product Type: `+element.product_info.type+`</p><p>Product Description: `+element.product_info.desc+`</p></div></div></div>`;
+       e.innerHTML = `<div class="uk-child-width-expand@s uk-text-center" uk-grid><div><div class="uk-card uk-card-default uk-card-body"><p>Product Name: `+element.product_info.name+`</p><p>Product ID: `+db.address.toString()+`</p><p>Product Type: `+element.product_info.type+`</p><p>Product Description: `+element.product_info.desc+`</p></div></div></div>`;
 
-			while(e.firstChild) {
-				document.getElementById("maincont").appendChild(e.firstChild);
-			}
-			console.log(element)
-		});
+     while(e.firstChild) {
+      document.getElementById("maincont").appendChild(e.firstChild);
+    }
+    console.log(element)
+  });
 		document.getElementById("loading").style.display = 'none';
 	}
 	function create(o) {
