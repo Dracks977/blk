@@ -81,9 +81,6 @@ const main = {
     console.log(address)
     const event = db.get(hash)
     callback(event)
-    // orbitdb = await OrbitDB.createInstance(ipfs)
-    // db = await orbitdb.keyvalue('first-database')
-    // console.log(db.address)
   }
 }
 
