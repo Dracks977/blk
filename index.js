@@ -11,17 +11,20 @@
  */
 
 // Import IPFS module
-import IPFS from 'ipfs'
+const IPFS = require('ipfs')
 
 // Import OrbitDB module from 'orbit-db', eg. directory to its package.json
-import OrbitDB from 'orbit-db'
+const OrbitDB = require('orbit-db')
 
 // When 'orbit-db' was installed from npm, use with:
 // import OrbitDB from 'orbit-db' 
 
 // Example main code
-const start = require('./src/main.js')
+const main = require('./src/main.js')
+
 
 // Call the start function and pass in the 
 // IPFS and OrbitDB modules
-start(IPFS, OrbitDB)
+main.init(IPFS, OrbitDB)
+
+module.exports = require('./src/main.js')

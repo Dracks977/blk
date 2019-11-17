@@ -6,7 +6,9 @@ const webpack = require('webpack')
 module.exports = {
   entry: './index.js',
   output: {
-    filename: './bundle.js'
+    filename: './bundle.js',
+    libraryTarget: 'var',
+    library: 'main'
   },
   target: 'web',
   devtool: 'none',
